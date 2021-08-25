@@ -67,7 +67,7 @@ def generarSobre():
     llave_AES = f.read()
     f.close()
 
-    llave_pub_rsa = RSA.importKey(open("PIACrptoAplicada.pub", "rb").read())
+    llave_pub_rsa = RSA.importKey(open("generador_rsa/llavepublica.pub", "rb").read())
     cifrado_rsa = PKCS1_OAEP.new(llave_pub_rsa)
     cifrar_mensaje_rsa = cifrado_rsa.encrypt(llave_AES)
 
@@ -183,7 +183,7 @@ def descifrarSobre():
     sobre_por_descifrar = s.read()
     s.close()
 
-    llave_priv_rsa = RSA.importKey(open("PIACrptoAplicada.key", "rb").read())
+    llave_priv_rsa = RSA.importKey(open("generador_rsa/llaveprivada.pem", "rb").read())
     cifrado = PKCS1_OAEP.new(llave_priv_rsa)
     sobre_dedscifrado = cifrado.decrypt(sobre_por_descifrar)
 
