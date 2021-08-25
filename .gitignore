@@ -1,1 +1,4 @@
 *.txt
+!requirements.txt
+*.pem
+*.pub
