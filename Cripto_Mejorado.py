@@ -3,8 +3,9 @@ from Crypto.Cipher import PKCS1_OAEP
 from Crypto.PublicKey import RSA
 import random
 
+
 #1.Elija un mensaje de cumpleaños
-birthday_messages = [
+birthday_messages = (
     'esta es una fiesta',
     'y NO estas invitado',
     'este NO es un mensaje',
@@ -18,7 +19,8 @@ birthday_messages = [
     'xD',
     'ELjajas',
     ' :p '
-]
+)
+
 
 def elegirMensaje():
     b_message = random.choice(birthday_messages)
@@ -28,16 +30,15 @@ def elegirMensaje():
 bir_mensa = elegirMensaje().encode()
 
 
-
 #2.Genera una clave AES aleatoria.
 def generarLlaveAES():
     clave = Fernet.generate_key()
     with open("llave_AES.txt", "wb") as archivo_clave:
         archivo_clave.write(clave)
 
+
 def cargarLlaveAES():
     return open("llave_AES.txt", "rb").read()
-
 
 
 #3.Cifre el mensaje de cumpleaños con la clave AES aleatoria. Esta será la tarjeta.
@@ -54,11 +55,11 @@ def generarTarjeta(x):
     sad = f.decrypt(encriptado)
     guardar(sad)
 
+
 XG = ''
 def guardar(g):
     global XG
     XG = g
-
 
 
 #4.Cifre la clave AES aleatoria con la clave pública RSA. Este será el sobre.
@@ -73,14 +74,6 @@ def generarSobre():
 
     with open("sobre.txt", "wb") as archivo_sobre:
         archivo_sobre.write(cifrar_mensaje_rsa)
-
-
-generarLlaveAES()
-print("Llaves generadas\n")
-generarTarjeta(bir_mensa)
-print("Tarjeta generadas\n")
-generarSobre()
-
 
 
 #5.Imprime (o envía, lo que sea) la tarjeta y el sobre a la víctima festejada.
@@ -98,19 +91,11 @@ def imprimirPaso5():
     print(paso5_sobre)
 
 
-
-imprimirPaso5()
-print()
-print()
-
-
 #6.Pídale a CrytpoJoker que descifre la tarjeta (por favor).
 #7.Pídale a la víctima que responda una pregunta sencilla.
 #Se recomienda utilizar un simple pregunta aritmética, como: “2 + 3 =”, y espere un número como respuesta.
 #Utilice preguntas diferentes, no siempre lo mismo.
 #8.Si la respuesta es correcta, pida el sobre.
-
-
 def pedirJoker():
     print("_______________________________________")
     print("Bienvenido a la fiesta del Joker, ¿Que deseas?")
@@ -120,7 +105,6 @@ def pedirJoker():
     print("1. Descifrar la Tarjeta")
     print("0. Salir")
     print()
-
 
 
 def menu():
@@ -173,9 +157,6 @@ def menu():
         break
 
 
-menu()
-
-
 #9.Descifre el sobre con la clave privada secreta RSA e imprímalo
 #(este es el AES clave privada, ¿recuerdas?)
 def descifrarSobre():
@@ -191,11 +172,6 @@ def descifrarSobre():
     archivo_sobre_descifrado.write(sobre_dedscifrado)
     archivo_sobre_descifrado.close()
     print("Sobre Descifrado\n")
-
-
-
-descifrarSobre()
-
 
 
 #10. Descifre la tarjeta utilizando el sobre descifrado.
@@ -223,8 +199,6 @@ def descifrarTarjeta():
     print("Tarjeta descifrada\n")
 
 
-descifrarTarjeta()
-
 #11. Disfrute del mensaje de felicitación.
 def mostrarMensaje():
     f = open("mensaje.txt", "rb")
@@ -233,5 +207,21 @@ def mostrarMensaje():
 
     print("El mensaje original es: ", mensaje)
 
-mostrarMensaje()
 
+def run():
+    generarLlaveAES()
+    print("Llaves generadas\n")
+    generarTarjeta(bir_mensa)
+    print("Tarjeta generadas\n")
+    generarSobre()
+    imprimirPaso5()
+    print()
+    print()
+    menu()
+    descifrarSobre()
+    descifrarTarjeta()
+    mostrarMensaje()
+
+
+if  __name__ ==  '__main__' :
+    run()
