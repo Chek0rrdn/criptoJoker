@@ -2,6 +2,8 @@ from cryptography.fernet import Fernet
 from Crypto.Cipher import PKCS1_OAEP
 from Crypto.PublicKey import RSA
 import random
+import os.path
+
 
 
 #1.Elija un mensaje de cumpleaños
@@ -115,13 +117,12 @@ def menu():
 
             if entrada_usuario in range(2):
 
-                print("Usted eligió la opcion {} !\n".format(entrada_usuario))
+                print(f"Usted eligió la opcion {entrada_usuario} !\n")
                 print()
 
                 if entrada_usuario == 0:
                     print("Adios! Vuelva pronto")
                     quit()
-                    break
                 elif entrada_usuario == 1:
 
                     print("Antes resuelva la siguiente pregunta: ")
@@ -140,21 +141,20 @@ def menu():
                     respuesta_a_pregunta = int(input())
 
                     if respuesta == respuesta_a_pregunta:
-                        print("La espuesta es: ", respuesta_a_pregunta, "\n")
+                        print(f"La espuesta es: {respuesta_a_pregunta}\n")
                         break
                     else:
-                        print("Te equivocaste")
+                        print("Te equivocaste, Adios perdedor!!!")
                         quit()
-                        break
 
 
             else:
                 print('Error, solo de aceptan numeros del 0 al 4')
+                quit()
 
         except ValueError:
             print("Error, ingrese solamente numeros")
             quit()
-        break
 
 
 #9.Descifre el sobre con la clave privada secreta RSA e imprímalo
@@ -193,19 +193,31 @@ def descifrarTarjeta():
         h = open("archivos_generados/mensaje.txt", "wb")
         h.write(XG)
         h.close()
+
+        mensaje_existe = r"archivos_generados/mensaje.txt"
+
+        if os.path.isfile(mensaje_existe) :
+            print("Tarjeta descifrada\n")
+            mostrarMensaje()
+
+      
     else:
         print("error 404")
 
-    print("Tarjeta descifrada\n")
+    
+
 
 
 #11. Disfrute del mensaje de felicitación.
 def mostrarMensaje():
+
     f = open("archivos_generados/mensaje.txt", "rb")
     mensaje = f.read()
     f.close()
 
     print("El mensaje original es: ", mensaje)
+
+
 
 
 def run():
@@ -220,7 +232,6 @@ def run():
     menu()
     descifrarSobre()
     descifrarTarjeta()
-    mostrarMensaje()
 
 
 if  __name__ ==  '__main__' :
