@@ -33,12 +33,12 @@ bir_mensa = elegirMensaje().encode()
 #2.Genera una clave AES aleatoria.
 def generarLlaveAES():
     clave = Fernet.generate_key()
-    with open("llave_AES.txt", "wb") as archivo_clave:
+    with open("archivos_generados/llave_AES.txt", "wb") as archivo_clave:
         archivo_clave.write(clave)
 
 
 def cargarLlaveAES():
-    return open("llave_AES.txt", "rb").read()
+    return open("archivos_generados/llave_AES.txt", "rb").read()
 
 
 #3.Cifre el mensaje de cumpleaños con la clave AES aleatoria. Esta será la tarjeta.
@@ -49,7 +49,7 @@ def generarTarjeta(x):
     f = Fernet(aes_key)
     encriptado = f.encrypt(bir_mensa)
 
-    with open("tarjeta.txt", "wb") as tarjeta_archivo:
+    with open("archivos_generados/tarjeta.txt", "wb") as tarjeta_archivo:
         tarjeta_archivo.write(encriptado)
 
     sad = f.decrypt(encriptado)
@@ -64,7 +64,7 @@ def guardar(g):
 
 #4.Cifre la clave AES aleatoria con la clave pública RSA. Este será el sobre.
 def generarSobre():
-    f = open("llave_AES.txt", "rb")
+    f = open("archivos_generados/llave_AES.txt", "rb")
     llave_AES = f.read()
     f.close()
 
@@ -72,16 +72,16 @@ def generarSobre():
     cifrado_rsa = PKCS1_OAEP.new(llave_pub_rsa)
     cifrar_mensaje_rsa = cifrado_rsa.encrypt(llave_AES)
 
-    with open("sobre.txt", "wb") as archivo_sobre:
+    with open("archivos_generados/sobre.txt", "wb") as archivo_sobre:
         archivo_sobre.write(cifrar_mensaje_rsa)
 
 
 #5.Imprime (o envía, lo que sea) la tarjeta y el sobre a la víctima festejada.
 def imprimirPaso5():
-    f = open("tarjeta.txt", "rb")
+    f = open("archivos_generados/tarjeta.txt", "rb")
     paso5_tarjeta = f.read()
     f.close()
-    g = open("sobre.txt", "rb")
+    g = open("archivos_generados/sobre.txt", "rb")
     paso5_sobre = g.read()
     g.close
     print("Es usted Bienvenido a Nuestra fiesta, esta es su tarjeta")
@@ -160,7 +160,7 @@ def menu():
 #9.Descifre el sobre con la clave privada secreta RSA e imprímalo
 #(este es el AES clave privada, ¿recuerdas?)
 def descifrarSobre():
-    s = open("sobre.txt", "rb")
+    s = open("archivos_generados/sobre.txt", "rb")
     sobre_por_descifrar = s.read()
     s.close()
 
@@ -168,7 +168,7 @@ def descifrarSobre():
     cifrado = PKCS1_OAEP.new(llave_priv_rsa)
     sobre_dedscifrado = cifrado.decrypt(sobre_por_descifrar)
 
-    archivo_sobre_descifrado = open("sobreDescifrado_claveAES.txt", "wb")
+    archivo_sobre_descifrado = open("archivos_generados/sobreDescifrado_claveAES.txt", "wb")
     archivo_sobre_descifrado.write(sobre_dedscifrado)
     archivo_sobre_descifrado.close()
     print("Sobre Descifrado\n")
@@ -181,16 +181,16 @@ def descifrarSobre():
 def descifrarTarjeta():
     llave_aes = cargarLlaveAES()
 
-    f = open("sobreDescifrado_claveAES.txt", "rb")
+    f = open("archivos_generados/sobreDescifrado_claveAES.txt", "rb")
     ar_x_comparar = f.read()
     f.close()
 
-    g = open("llave_AES.txt", "rb")
+    g = open("archivos_generados/llave_AES.txt", "rb")
     ar_y_comparar = g.read()
     g.close()
 
     if ar_x_comparar == ar_y_comparar:
-        h = open("mensaje.txt", "wb")
+        h = open("archivos_generados/mensaje.txt", "wb")
         h.write(XG)
         h.close()
     else:
@@ -201,7 +201,7 @@ def descifrarTarjeta():
 
 #11. Disfrute del mensaje de felicitación.
 def mostrarMensaje():
-    f = open("mensaje.txt", "rb")
+    f = open("archivos_generados/mensaje.txt", "rb")
     mensaje = f.read()
     f.close()
 

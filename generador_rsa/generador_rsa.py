@@ -1,6 +1,6 @@
 from Crypto.PublicKey import RSA
 
-tam = 2048
+tam = 4096
 
 llave = RSA.generate(tam)
 
