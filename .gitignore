@@ -1,3 +1,5 @@
+/venv
+/keys
 *.txt
 !requirements.txt
 *.pem
