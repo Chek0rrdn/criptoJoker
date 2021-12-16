@@ -1,5 +1,11 @@
 import random
 
+from sobre import *
+from tarjeta import *
+
+from cryptography.fernet import Fernet
+from Crypto.PublicKey import RSA
+
 
 _birthday_messages = (
     'esta es una fiesta',
@@ -18,23 +24,36 @@ _birthday_messages = (
 )
 
 
-def elegirt_mensaje():
+def elegir_mensaje():
     b_message = random.choice(_birthday_messages)
     b_message.encode()
     return b_message
 
 
-def generar_RSA():
-    pass
+#LLAVES RSA
+def generar_llaves_RSA():
+    tam = 4096
+    llave = RSA.generate(tam)
+
+    with open('../keys/llaveprivada.pem', mode='wb') as file:
+        file.write(llave.export_key('PEM'))
+
+    with open('../keys/llavepublica.pub', mode='wb') as file:
+        file.write(llave.public_key().export_key('PEM'))
+
+def obtener_llaves_RSA():
+    return open("../keys/llavepublica.pub", "rb").read().decode()
 
 
-def generar_claves_AES():
-    pass
+#LLAVES AES
+def generar_clave_AES():
+    clave = Fernet.generate_key()
+    with open("../keys/llave_AES.txt", "wb") as archivo_clave:
+        archivo_clave.write(clave)
 
+def obtener_llaves_AES():
+    return open("../keys/llave_AES.txt", "rb").read().decode()
 
 def preguntas():
     pass
 
-
-if __name__ == '__main__':
-    pass

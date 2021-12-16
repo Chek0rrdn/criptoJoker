@@ -1,5 +1,7 @@
 /venv
 /keys
+/__pycache__
+/classes/__pycache__
 *.txt
 !requirements.txt
 *.pem
