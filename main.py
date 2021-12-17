@@ -2,8 +2,11 @@ from criptoJoker import tarjeta
 from criptoJoker import sobre
 from criptoJoker import common as cm
 
-if __name__ == '__main__':
 
+@cm.tiempo_de_ejecucion
+def run():
+    cm.generar_llaves_RSA()
+    print("Se generaro el nuevo par de Llaves RSA")
     cm.generar_clave_AES()
     print("Se generaron la nueva llave AES")
 
@@ -44,3 +47,8 @@ if __name__ == '__main__':
         'tarjeta-descifrada-\'MENSAJE\'',
         tarjeta_.mostrar_tarjeta_descifrada()
     )
+
+
+
+if __name__ == '__main__':
+    run()

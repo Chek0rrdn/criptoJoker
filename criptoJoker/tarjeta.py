@@ -26,11 +26,3 @@ class Tarjeta:
     # al descifrar la tarjeta, se obtiene el mismo resultado que el MENSAJE
     def mostrar_tarjeta_descifrada(self):
         return self.__tarjeta_descifrada.decode()
-
-
-    @property
-    def clave_aes(self):
-        return self.__clave_aes
-    @property
-    def mensaje(self):
-        return self.__mensaje

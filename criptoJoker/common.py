@@ -37,6 +37,18 @@ def limpiar_pantalla():
         comando = 'cls'
     os.system(comando)
 
+##MEDIR TIEMPO
+def tiempo_de_ejecucion(func):
+    def envoltura(*args, **kwargs):
+        tiempo_inicial = time.time()
+        func(*args, **kwargs)
+        tiempo_final = time.time()
+        tiempo_transcurrido = tiempo_final-tiempo_inicial
+        tiempo_transcurrido = round(tiempo_transcurrido, 3)
+        print(f"Transcurrieron: {tiempo_transcurrido} segundos")
+
+    return envoltura
+
 
 #SELECCIONAR UN MENSAJE ALEATORIO
 def elegir_mensaje():
