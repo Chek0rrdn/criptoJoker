@@ -36,11 +36,3 @@ This can be done with the command:
 ```sh
 pip3 install -r requirements.txt 
 ```
-
-> and once installed, run the program:
-
-```sh
-generador_rsa.py 
-```
-
->file found in "rsa generator" folder
