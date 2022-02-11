@@ -62,11 +62,21 @@ def generar_llaves_RSA():
     tam = 4096
     llave = RSA.generate(tam)
 
-    with open('./criptoJoker/keys/llaveprivada.pem', mode='wb') as file:
-        file.write(llave.export_key('PEM'))
+    if not os.path.isdir('./criptoJoker/keys/'):
+        os.mkdir('./criptoJoker/keys')
 
-    with open('./criptoJoker/keys/llavepublica.pub', mode='wb') as file:
-        file.write(llave.public_key().export_key('PEM'))
+    if os.path.isfile('./criptoJoker/keys/llaveprivada.pem'):
+        pass
+    else:
+        with open('./criptoJoker/keys/llaveprivada.pem', mode='wb') as file:
+            file.write(llave.export_key('PEM'))
+
+    if os.path.isfile('./criptoJoker/keys/llavepublica.pub'):
+        pass
+    else:
+        with open('./criptoJoker/keys/llavepublica.pub', mode='wb') as file:
+            file.write(llave.public_key().export_key('PEM'))
+
 
 def obtener_llave_pub_RSA():
     return open("./criptoJoker/keys/llavepublica.pub", "rb").read()
@@ -151,6 +161,10 @@ def menu():
 
 def guardar(nombre_archivo, archivo):
     ruta = f'./criptoJoker/files/{nombre_archivo}.txt'
+
+    if not os.path.isdir('./criptoJoker/files/'):
+        os.mkdir('./criptoJoker/files/')
+
     with open(ruta, mode='w')as file:
         archivo = str(archivo)
         file.write(archivo)

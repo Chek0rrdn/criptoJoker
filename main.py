@@ -1,5 +1,5 @@
-from criptoJoker import tarjeta
-from criptoJoker import sobre
+from criptoJoker import tarjeta as tj
+from criptoJoker import sobre as sb
 from criptoJoker import common as cm
 
 
@@ -10,12 +10,12 @@ def run():
     cm.generar_clave_AES()
     print("Se generaron la nueva llave AES")
 
-    tarjeta_ = tarjeta.Tarjeta(
+    tarjeta_ = tj.Tarjeta(
         mensaje=cm.elegir_mensaje().encode(), 
         clave_aes=cm.obtener_llaves_AES()
     )
 
-    sobre_ = sobre.Sobre(
+    sobre_ = sb.Sobre(
         clave_aes=cm.obtener_llaves_AES(), 
         llave_pub_rsa=cm.obtener_llave_pub_RSA(), 
         llave_priv_rsa=cm.obtener_llave_priv_RSA()
