@@ -1,6 +1,7 @@
 import random
 import signal
 import sys
+import pathlib
 import time
 import os
 
@@ -23,6 +24,7 @@ __birthday_messages = (
     'ELjajas',
     ' :p '
 )
+
 #MANEJO DEL Ctrl. + C
 def def_handler(sig, frame):
     print("\nSaliendo...\n")
@@ -30,12 +32,14 @@ def def_handler(sig, frame):
 
 signal.signal(signal.SIGINT, def_handler)
 
+
 #LIMPIAR PANTALLA
 def limpiar_pantalla():
     comando = 'clear'
     if os.name in ('nt', 'dos'):  # Si lla maquina esta corriendo Windows se utiliza cls
         comando = 'cls'
     os.system(comando)
+
 
 ##MEDIR TIEMPO
 def tiempo_de_ejecucion(func):
@@ -50,6 +54,7 @@ def tiempo_de_ejecucion(func):
     return envoltura
 
 
+
 #SELECCIONAR UN MENSAJE ALEATORIO
 def elegir_mensaje():
     b_message = random.choice(__birthday_messages)
@@ -57,42 +62,56 @@ def elegir_mensaje():
     return b_message
 
 
+
+DIRECTORIO_ACTUAL = pathlib.Path().resolve()
+DIRECTORIO_LLAVES = DIRECTORIO_ACTUAL.joinpath("keys")
+
+
+
 #LLAVES RSA
 def generar_llaves_RSA():
     tam = 4096
     llave = RSA.generate(tam)
 
-    if not os.path.isdir('./criptoJoker/keys/'):
-        os.mkdir('./criptoJoker/keys')
 
-    if os.path.isfile('./criptoJoker/keys/llaveprivada.pem'):
+    if not DIRECTORIO_LLAVES.exists():
+        DIRECTORIO_LLAVES.mkdir()
+
+
+    if pathlib.Path(DIRECTORIO_LLAVES / "llaveprivada.pem").exists():
         pass
     else:
-        with open('./criptoJoker/keys/llaveprivada.pem', mode='wb') as file:
+        with open(pathlib.Path(DIRECTORIO_LLAVES / "llaveprivada.pem"), mode='wb') as file:
             file.write(llave.export_key('PEM'))
 
-    if os.path.isfile('./criptoJoker/keys/llavepublica.pub'):
+
+
+    if pathlib.Path(DIRECTORIO_LLAVES / "llavepublica.pub").exists():
         pass
     else:
-        with open('./criptoJoker/keys/llavepublica.pub', mode='wb') as file:
+        with open(pathlib.Path(DIRECTORIO_LLAVES / "llavepublica.pub"), mode='wb') as file:
             file.write(llave.public_key().export_key('PEM'))
 
 
+
 def obtener_llave_pub_RSA():
-    return open("./criptoJoker/keys/llavepublica.pub", "rb").read()
+    return open(DIRECTORIO_LLAVES / "llavepublica.pub", "rb").read()
+
 
 def obtener_llave_priv_RSA():
-    return open('./criptoJoker/keys/llaveprivada.pem', 'rb').read()
+    return open(DIRECTORIO_LLAVES / "llaveprivada.pem", 'rb').read()
+
 
 
 #LLAVES AES
 def generar_clave_AES():
     clave = Fernet.generate_key()
-    with open("./criptoJoker/keys/llave_AES.txt", "wb") as archivo_clave:
+    with open(DIRECTORIO_LLAVES / "llave_AES.txt", "wb") as archivo_clave:
         archivo_clave.write(clave)
 
 def obtener_llaves_AES():
-    return open('./criptoJoker/keys/llave_AES.txt', 'rb').read()
+    return open(DIRECTORIO_LLAVES / "llave_AES.txt", 'rb').read()
+
 
 
 ##MENUS
@@ -159,11 +178,15 @@ def menu():
             print("Error, ingrese solamente numeros")
             # quit()
 
-def guardar(nombre_archivo, archivo):
-    ruta = f'./criptoJoker/files/{nombre_archivo}.txt'
 
-    if not os.path.isdir('./criptoJoker/files/'):
-        os.mkdir('./criptoJoker/files/')
+
+DIRECTORIO_ARCHIVOS = DIRECTORIO_ACTUAL.joinpath("files")
+
+def guardar(nombre_archivo, archivo):
+    ruta = str(DIRECTORIO_ARCHIVOS) + str(f'/{nombre_archivo}.txt')
+
+    if not DIRECTORIO_ARCHIVOS.exists():
+      DIRECTORIO_ARCHIVOS.mkdir()
 
     with open(ruta, mode='w')as file:
         archivo = str(archivo)
