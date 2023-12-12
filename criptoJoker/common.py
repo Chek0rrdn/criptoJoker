@@ -28,7 +28,7 @@ __birthday_messages = (
 #MANEJO DEL Ctrl. + C
 def def_handler(sig, frame):
     print("\nSaliendo...\n")
-    sys.exit()
+    sys.exit(1)
 
 signal.signal(signal.SIGINT, def_handler)
 
@@ -36,7 +36,7 @@ signal.signal(signal.SIGINT, def_handler)
 #LIMPIAR PANTALLA
 def limpiar_pantalla():
     comando = 'clear'
-    if os.name in ('nt', 'dos'):  # Si lla maquina esta corriendo Windows se utiliza cls
+    if os.name in ('nt', 'dos'):  # Si la maquina esta corriendo Windows se utiliza cls
         comando = 'cls'
     os.system(comando)
 
@@ -132,11 +132,11 @@ def menu():
     while True:
         pedir_joker()
         try:
-            entrada_usuario = int(input("Seleccione una opcion: "))
+            entrada_usuario = int(input("Seleccione una opción: "))
 
             if entrada_usuario in range(2):
 
-                print(f"Usted eligió la opcion {entrada_usuario} !\n")
+                print(f"Usted eligió la opción {entrada_usuario} !\n")
                 # print()
 
                 if entrada_usuario == 0:
@@ -160,7 +160,7 @@ def menu():
                     respuesta_a_pregunta = int(input())
 
                     if respuesta == respuesta_a_pregunta:
-                        print(f"La espuesta es: {respuesta_a_pregunta}, por lo tanto su respuesta es CORRECTA\n")
+                        print(f"La respuesta es: {respuesta_a_pregunta}, por lo tanto su respuesta es CORRECTA\n")
                         limpiar_pantalla()
                         break
                     else:
@@ -169,13 +169,13 @@ def menu():
 
 
             else:
-                print('Error, solo de aceptan numeros del 0 al 4')
+                print('Error, solo de aceptan números del 0 al 4')
                 time.sleep(1.2)
                 limpiar_pantalla()
                 # quit()
 
         except ValueError:
-            print("Error, ingrese solamente numeros")
+            print("Error, ingrese solamente números")
             # quit()
 
 
@@ -186,7 +186,7 @@ def guardar(nombre_archivo, archivo):
     ruta = str(DIRECTORIO_ARCHIVOS) + str(f'/{nombre_archivo}.txt')
 
     if not DIRECTORIO_ARCHIVOS.exists():
-      DIRECTORIO_ARCHIVOS.mkdir()
+        DIRECTORIO_ARCHIVOS.mkdir()
 
     with open(ruta, mode='w')as file:
         archivo = str(archivo)

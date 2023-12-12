@@ -6,7 +6,7 @@ from criptoJoker import common as cm
 @cm.tiempo_de_ejecucion
 def run():
     cm.generar_llaves_RSA()
-    print("Se generaro el nuevo par de Llaves RSA")
+    print("Se generado el nuevo par de Llaves RSA")
     cm.generar_clave_AES()
     print("Se generaron la nueva llave AES")
 

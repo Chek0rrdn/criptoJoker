@@ -23,6 +23,7 @@ class Tarjeta:
     def mostrar_tarjeta_cifrada(self):
         return self.__tarjeta_cifrada.decode()
 
+
     # al descifrar la tarjeta, se obtiene el mismo resultado que el MENSAJE
     def mostrar_tarjeta_descifrada(self):
         return self.__tarjeta_descifrada.decode()

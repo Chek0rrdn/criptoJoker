@@ -23,15 +23,18 @@ class Sobre:
         self.__sobre_cifrado = cifrar_mensaje_con_rsa
         self.__descifrar_sobre()
 
+
     #se descifra a partir de el sobre descifrado
     def __descifrar_sobre(self):
         llave_priv_rsa = RSA.importKey(self.__llave_priv_rsa)
         cifrado = PKCS1_OAEP.new(llave_priv_rsa)
         self.__sobre_descifrado = cifrado.decrypt(self.__sobre_cifrado)
 
+
     #Clave AES cifrada con RSA(pub_key)
     def mostrar_sobre_cifrado(self):
         return self.__sobre_cifrado
+    
     
     def mostrar_sobre_descifrado(self):
         return self.__sobre_descifrado
